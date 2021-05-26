@@ -7,6 +7,7 @@
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate(false)">{{ $t('table.add') }}</el-button>
     </div>
 
+    <!-- <el-table :data="list" :load="load" lazy row-key="id" border> -->
     <el-table :data="list" row-key="id" border>
       <el-table-column :label="$t('organizationTable.organizationName')">
         <template slot-scope="scope">
@@ -139,6 +140,7 @@ export default {
       })
     }
     return {
+      maps:new Map(),
       expandAll: false,
       provinceOptions: null,
       props: {
@@ -213,6 +215,31 @@ export default {
     this.getAreaList()
   },
   methods: {
+    // load(tree, treeNode, resolve) {
+    //   console.log(this.list)
+    //   console.log(tree)
+    //   // for(var data in this.list){
+    //   //   for(var Subclass in this.list){
+    //   //     if(tree.id==){
+
+    //   //     }
+    //   //   }
+        
+    //   // }
+    //   var lists = []
+    //   lists.push(this.list[0].children)
+    //   console.log(lists)
+    //   //return resolve(lists);
+    //   return resolve(this.list[0].children);
+    //   // fetchOrgList(this.treeQuery).then(response => {
+    //   //   this.list = response.data
+    //   //   this.baseList = JSON.parse(JSON.stringify(response.data)) // 数组深复制
+    //   //   this.listLoading = false
+    //   //   console.log(this.baseList[0].children)
+    //   //   resolve(this.baseList[0].children)
+    //   // })
+      
+    // },
     getList() {
       this.listLoading = true
       fetchOrgList(this.treeQuery).then(response => {
@@ -288,6 +315,7 @@ export default {
               message: '创建成功',
               type: 'success'
             })
+            //this.getList();
           })
         }
       })

@@ -434,7 +434,7 @@ export default {
       this.createDoctorInput.scheduleName = item.scheduleName;
       this.createDoctorInput.regLevelName = item.regLevelName;
       this.createDoctorInput.description = item.description;
-      this.src = "http://127.0.0.1:9527" + `/hospt/doctorImg/${item.id}`; // base.sq +
+      this.src = process.env.VUE_APP_BASE_API+ `/hospt/doctorImg/${item.id}`; // base.sq +
       this.isShowImg = true;
     },
     updateImg(param) {
@@ -509,22 +509,25 @@ export default {
       let loadingInstance = Loading.service({});
       const params = this.createDoctorInput;
 
-      axios.post('http://127.0.0.1:8088/hospt/create', fd, {
+      axios.post(process.env.VUE_APP_BASE_API+'/hospt/create', fd, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       })
       .then(res => {
-            if (data.code !== 200) {
+            console.log(res.data)
+            if (res.data.code !== 200) {
               this.$message({
                 type: "info",
-                message: data.msg,
+                message: res.data.msg,
               });
             } else {
+              console.log(1)
               this.$message({
                 type: "success",
                 message: "添加成功！",
               });
+              console.log(1)
               this.dialogFormVisible = false;
               this.getTableList();
             }
@@ -568,7 +571,11 @@ export default {
       fd.append("description", this.createDoctorInput.description);
       fd.append("introduce", this.createDoctorInput.introduce);
       let loadingInstance = Loading.service({});
-      updateDoctor(fd)
+      axios.post(process.env.VUE_APP_BASE_API+'/hospt/update', fd, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
         .then((data) => {
           if (data && data.data) {
             if (data.data.code !== 200) {
@@ -589,10 +596,10 @@ export default {
         })
         .catch(() => {
           loadingInstance.close();
-        });
+        })
     },
   },
-};
+}
 </script>
 <style lang="scss" scoped>
   .filter-container {

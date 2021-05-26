@@ -368,6 +368,7 @@ export default {
       }
     },
     updateNoticeApi() {
+      let loadingInstance = Loading.service({});
       updateNotice(this.createNoticInput)
         .then((res) => {
           console.log(res);
